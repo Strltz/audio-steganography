@@ -1,16 +1,13 @@
 ﻿// steganography_audio.cpp
 //
 
-#include <fstream>
-#include <iostream>
-#include <string>
-#include <vector>
+#include "Steganography.h"
 
 int main()
 {
+    Steganography st("Departure_METRO_2033.mp3");
+    st.print_all();
     
-
-
 
     /*std::ofstream file("Departure_METRO_2033 — копия.mp3", std::ios::in | std::ios::binary);
 
