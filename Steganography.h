@@ -14,11 +14,13 @@ private:
 	int current_position;
 	int file_size;
 	int id3v2_tag_size;
+	int k; // סק¸עקטך פנוילמג
 
 
 public:
 	void seek_zweite(int);
-	void change_byte(char);
+	void change_byte();
+	void stego_frame_change_smthng(int, int);
 
 	Steganography(std::string);
 

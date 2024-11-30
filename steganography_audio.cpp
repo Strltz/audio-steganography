@@ -5,41 +5,15 @@
 
 int main()
 {
+    // Departure_METRO_2033
+    // Antonio_Vivaldi_-_Koncert_No_1_mi_mazhor_soch_8_RV_269_Vesna_I_Allegro_71556559
+    // Rammstein_-_RADIO_63782865
+
     setlocale(LC_ALL, "ru");
-    Steganography st("Departure_METRO_2033.mp3");
-    std::cout << st.get_current_position() << std::endl;
+    Steganography st("Rammstein_-_RADIO_63782865.mp3");
     st.seek_zweite(st.get_id3v2_tag_size());
-    std::cout << st.get_current_position() << std::endl;
-    st.change_byte(15);
-    std::cout << st.get_current_position() << std::endl;
-
-    /*std::ofstream file("Departure_METRO_2033 — копия.mp3", std::ios::in | std::ios::binary);
-
-    if (!file.is_open()) {
-        std::cerr << "Ошибка открытия файла" << std::endl;
-        return 1;
+    
+    for (size_t i = 0; i < 2000; ++i) {
+        st.stego_frame_change_smthng(1, 1);
     }
-
-    std::ifstream file2("Departure_METRO_2033_right — копия.mp3", std::ios::in | std::ios::binary);
-
-    file.seekp(65536 + 5 * 4096 + 16);
-    for (size_t i = 0; i < 65536; ++i) {
-        file2.seekg(65536 + 5 * 4096 + 16 + i);
-        file.put(file2.get() - file2.get() % 2);
-    }
-
-
-    std::cout << "Ок" << std::endl;
-
-    std::ifstream file2("Departure_METRO_2033.mp3", std::ios::in | std::ios::binary);
-
-    file2.seekg(65536 + 5 * 4096);
-    std::cout << (char)file2.get();
-    std::cout << (char)file2.get();
-    std::cout << (char)file2.get();
-    std::cout << (char)file2.get();
-    std::cout << (char)file2.get();
-
-    file.close();
-    file2.close();*/
 }

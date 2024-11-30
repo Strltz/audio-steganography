@@ -1,2 +1,11 @@
-﻿  steganography_audio.cpp
+﻿  Steganography.cpp
+C:\Users\kw1nt00\Desktop\3 семестр\Технологии и методы программирования\Курсовой проект\Стеганография цифровых аудиоданных\steganography_audio\Steganography.cpp(30,41): warning C4244: =: преобразование "std::streamoff" в "int", возможна потеря данных
+C:\Users\kw1nt00\Desktop\3 семестр\Технологии и методы программирования\Курсовой проект\Стеганография цифровых аудиоданных\steganography_audio\Steganography.cpp(36,52): warning C4244: +=: преобразование "double" в "int", возможна потеря данных
+C:\Users\kw1nt00\Desktop\3 семестр\Технологии и методы программирования\Курсовой проект\Стеганография цифровых аудиоданных\steganography_audio\Steganography.cpp(40,48): warning C4244: =: преобразование "std::streamoff" в "int", возможна потеря данных
+C:\Users\kw1nt00\Desktop\3 семестр\Технологии и методы программирования\Курсовой проект\Стеганография цифровых аудиоданных\steganography_audio\Steganography.cpp(48,47): warning C4244: =: преобразование "std::streamoff" в "int", возможна потеря данных
+C:\Users\kw1nt00\Desktop\3 семестр\Технологии и методы программирования\Курсовой проект\Стеганография цифровых аудиоданных\steganography_audio\Steganography.cpp(111,18): warning C4244: инициализация: преобразование "std::streamoff" в "int", возможна потеря данных
+C:\Users\kw1nt00\Desktop\3 семестр\Технологии и методы программирования\Курсовой проект\Стеганография цифровых аудиоданных\steganography_audio\Steganography.cpp(112,20): warning C4244: инициализация: преобразование "std::streamoff" в "int", возможна потеря данных
+C:\Users\kw1nt00\Desktop\3 семестр\Технологии и методы программирования\Курсовой проект\Стеганография цифровых аудиоданных\steganography_audio\Steganography.cpp(114,40): warning C4244: return: преобразование "std::streamoff" в "int", возможна потеря данных
+  steganography_audio.cpp
+  Создание кода...
   steganography_audio.vcxproj -> C:\Users\kw1nt00\Desktop\3 семестр\Технологии и методы программирования\Курсовой проект\Стеганография цифровых аудиоданных\steganography_audio\x64\Debug\steganography_audio.exe
