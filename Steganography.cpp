@@ -25,25 +25,53 @@ Steganography::Steganography(std::string file_name) {
     file_change_bytes.open(file_name, std::ios::in | std::ios::binary);
     file_for_read_only.open(file_name, std::ios::in | std::ios::binary);
 
-    // сдвиг на 6-ой байт - id3v2.hdr.size
+    // получение размера файла 
+    file_for_read_only.seekg(0, std::ios::end);
+    file_size = file_for_read_only.tellg();
+
+    // получение размера тега id3v2 (6-ой байт)
     seek_zweite(6);
     id3v2_tag_size = 10;
     for (size_t i = 0; i < 4; ++i) {
         id3v2_tag_size += file_for_read_only.get() * pow(2, (3 - i) * 7);
     }
+
+    seek_zweite(0);
+    current_position = file_for_read_only.tellg();
 }
 
 // сдвиг указателя для чтения и для работы в файле на позицию pos
 void Steganography::seek_zweite(int pos) {
     this->file_for_read_only.seekg(pos);
     this->file_change_bytes.seekp(pos);
+    current_position = file_change_bytes.tellp();
 }
 
-// замена байта на позиции pos на byte
-void Steganography::change_byte(std::string file_name, int pos, char byte)
-{
-    std::fstream bin(file_name, std::ios::in | std::ios::binary);
-    bin.seekp(pos, std::ios::beg);
-    bin.put(byte);
-    bin.close();
+// замена байта на текущей позиции на byte
+void Steganography::change_byte(char byte) {
+    file_change_bytes.put(byte);
+    ++current_position;
+    file_for_read_only.seekg(current_position);
+}
+
+// геттеры
+std::string Steganography::get_file_name() {
+    return file_name;
+}
+
+int Steganography::get_file_size() {
+    return file_size;
+}
+
+int Steganography::get_id3v2_tag_size() {
+    return id3v2_tag_size;
+}
+
+int Steganography::get_current_position() {
+    int pos_read = file_for_read_only.tellg();
+    int pos_change = file_change_bytes.tellp();
+    if (pos_change == pos_read) {
+        return file_for_read_only.tellg();
+    }
+    return -1;
 }

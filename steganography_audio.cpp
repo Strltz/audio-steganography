@@ -5,9 +5,13 @@
 
 int main()
 {
+    setlocale(LC_ALL, "ru");
     Steganography st("Departure_METRO_2033.mp3");
-    st.print_all();
-    
+    std::cout << st.get_current_position() << std::endl;
+    st.seek_zweite(st.get_id3v2_tag_size());
+    std::cout << st.get_current_position() << std::endl;
+    st.change_byte(15);
+    std::cout << st.get_current_position() << std::endl;
 
     /*std::ofstream file("Departure_METRO_2033 — копия.mp3", std::ios::in | std::ios::binary);
 
@@ -38,5 +42,4 @@ int main()
 
     file.close();
     file2.close();*/
-    return 0;
 }
