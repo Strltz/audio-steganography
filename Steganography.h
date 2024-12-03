@@ -19,6 +19,8 @@ private:
 		{ 0, 32, 40, 48, 56, 64, 80, 96, 112, 128, 160, 192, 224, 256, 320 };
 	std::vector<int> frequency_indexes = { 44100, 48000, 32000, 0 };
 
+	std::vector<unsigned char> secret_information;
+
 	int frame_get_bitrate();
 	int frame_get_frequency();
 	void change_byte_certain(int);
@@ -27,14 +29,16 @@ public:
 	int current_position;
 
 	int frame_get_size();
-	std::vector<unsigned char> stego_frame_lsb(std::vector<unsigned char>);
+	std::vector<bool> stego_frame_lsb(std::vector<bool>);
 	std::vector<unsigned char> stego_frame_change_full(std::vector<unsigned char>);
 	std::vector<unsigned char> stego_frame_change_smthng(std::vector<unsigned char>);
 	void frame_graphic();
 	void seek_zweite(int);
-	void change_bitrate_index();
 	void test_change();
-	void stego();
+	void steganography_lsb(std::vector<unsigned char>);
+	void steganography_change_full(std::vector<unsigned char>);
+	std::vector<unsigned char> binarization_information(std::string);
+	
 
 	//
 	Steganography(std::string);

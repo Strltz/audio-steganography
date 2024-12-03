@@ -106,7 +106,7 @@ int Steganography::frame_get_size()
 }
 
 // внедрение информации во фрейма (метод lsb); возвращает не поместившуюся информацию
-std::vector<unsigned char> Steganography::stego_frame_lsb(std::vector<unsigned char> secret_info) {
+std::vector<bool> Steganography::stego_frame_lsb(std::vector <bool> secret_info) {
     // здесь в secret_info хранятся уже 0 и 1, нам нужно их лишь в правильном порядке поставить 
     int size_frame = frame_get_size();
     current_position += 4;
@@ -121,6 +121,7 @@ std::vector<unsigned char> Steganography::stego_frame_lsb(std::vector<unsigned c
     current_position = end_position;
     seek_zweite(current_position);
     ++сurrent_frame;
+    std::cout << current_position - 80000 << std::endl;
     return secret_info;
 }
 
@@ -142,6 +143,7 @@ std::vector<unsigned char> Steganography::stego_frame_change_full(std::vector<un
     return secret_info;
 }
 
+// для тетсирования и экспериментов
 std::vector<unsigned char> Steganography::stego_frame_change_smthng(std::vector<unsigned char> secret_info) {
     int size_frame = frame_get_size();
     current_position += 4;
@@ -161,11 +163,35 @@ std::vector<unsigned char> Steganography::stego_frame_change_smthng(std::vector<
     return secret_info;
 }
 
+// функции стеганографии
+void Steganography::steganography_lsb(std::vector<unsigned char> information) {
+    std::vector<bool> vec;
+    for (size_t i = 0; i < information.size(); ++i) {
+        int this_byte = information[i];
+        for (size_t j = 0; j < 8; ++j) {
+            vec.push_back((bool)((int)this_byte / (int)pow(2, (7 - j))));
+            this_byte = this_byte - ((int)this_byte / (int)pow(2, (7 - j)))* (int)pow(2, (7 - j));
+        }
+    }
+    secret_information = information;
+    while (vec.size() != 0) {
+        vec = stego_frame_lsb(vec);
+    }
+}
 
+void Steganography::steganography_change_full(std::vector<unsigned char> information) {
+    secret_information = information;
+    while (information.size() != 0) {
+        information = stego_frame_change_full(information);
+    }
+}
 
-// функция стеганографии
-void Steganography::stego() {
-
+std::vector<unsigned char> Steganography::binarization_information(std::string information) {
+    std::vector<unsigned char> vec;
+    for (size_t i = 0; i < information.size(); ++i) {
+        vec.push_back((char)information[i]);
+    }
+    return vec;
 }
 
 

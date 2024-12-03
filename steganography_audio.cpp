@@ -16,16 +16,20 @@ int main()
     st.seek_zweite(st.get_id3v2_tag_size());
 
 
-    std::vector<unsigned char> v;   
+    std::string info = "Guten Tag";
+    for (size_t i = 0; i < 1000; ++i) {
+        info += "ag";
+    }
+    st.steganography_change_full(st.binarization_information(info));
     
-    for (size_t j = 0; j < 1000; ++j) {
+    /*for (size_t j = 0; j < 1000; ++j) {
         v.push_back((unsigned char)(rand() % 256));
     }
 
     for (size_t i = 0; i < 500; ++i) {
 
         st.stego_frame_change_smthng(v);
-    }
+    }*/
 
     /*for (size_t i = 0; i < 600; ++i) {
         std::cout << i << " ";
