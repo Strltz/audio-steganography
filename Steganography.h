@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cmath>
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -11,30 +12,36 @@ private:
 	std::string file_name;
     std::ofstream file_change_bytes; // הכÿ נאבמעû ס פאיכמל
     std::ifstream file_for_read_only; // הכÿ קעוםטÿ פאיכא
-	int current_position;
 	int file_size;
 	int id3v2_tag_size;
-	int k; // סק¸עקטך פנוילמג
+	int סurrent_frame; // סק¸עקטך mp3-פנוילמג
+	std::vector<int> bitrate_indexes =
+		{ 0, 32, 40, 48, 56, 64, 80, 96, 112, 128, 160, 192, 224, 256, 320 };
+	std::vector<int> frequency_indexes = { 44100, 48000, 32000, 0 };
 
+	int frame_get_bitrate();
+	int frame_get_frequency();
+	void change_byte_certain(int);
 
 public:
-	void seek_zweite(int);
-	void change_byte();
-	void stego_frame_change_smthng(int, int);
+	int current_position;
 
+	int frame_get_size();
+	std::vector<unsigned char> stego_frame_lsb(std::vector<unsigned char>);
+	std::vector<unsigned char> stego_frame_change_full(std::vector<unsigned char>);
+	std::vector<unsigned char> stego_frame_change_smthng(std::vector<unsigned char>);
+	void frame_graphic();
+	void seek_zweite(int);
+	void change_bitrate_index();
+	void test_change();
+	void stego();
+
+	//
 	Steganography(std::string);
 
 	std::string get_file_name();
-
 	int get_file_size();
-
 	int get_id3v2_tag_size();
-
 	int get_current_position();
-
-	void print_all() {
-		std::cout << file_name << std::endl;
-		std::cout << "size: " << file_size << " ֱאיע" << std::endl;
-		std::cout << "id3v2 size: " << id3v2_tag_size << std::endl;
-	}
+	void print_all();
 };
