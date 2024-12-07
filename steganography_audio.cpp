@@ -12,16 +12,14 @@ int main()
     // tishyna-1m
 
     setlocale(LC_ALL, "ru");
-    Steganography st("Rammstein_-_RADIO_63782865.mp3");
+    Steganography st("Departure_METRO_2033.mp3");
     st.seek_zweite(st.get_id3v2_tag_size());
-
 
     std::string info = "Guten Tag";
     for (size_t i = 0; i < 1000; ++i) {
-        info += "ag";
+        info += "q";
     }
-    st.steganography_change_full(st.binarization_information(info));
-    
+    st.steganography_lsb(st.binarization_information(info));
     /*for (size_t j = 0; j < 1000; ++j) {
         v.push_back((unsigned char)(rand() % 256));
     }

@@ -38,6 +38,8 @@ public:
 	void steganography_lsb(std::vector<unsigned char>);
 	void steganography_change_full(std::vector<unsigned char>);
 	std::vector<unsigned char> binarization_information(std::string);
+	int id3v2_get_size_tf();
+	int id3v2_get_size_base_info();
 	
 
 	//

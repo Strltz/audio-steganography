@@ -105,7 +105,7 @@ int Steganography::frame_get_size()
     return size_frame;
 }
 
-// внедрение информации во фрейма (метод lsb); возвращает не поместившуюся информацию
+// внедрение информации во фрейм (метод lsb); возвращает не поместившуюся информацию
 std::vector<bool> Steganography::stego_frame_lsb(std::vector <bool> secret_info) {
     // здесь в secret_info хранятся уже 0 и 1, нам нужно их лишь в правильном порядке поставить 
     int size_frame = frame_get_size();
@@ -121,7 +121,6 @@ std::vector<bool> Steganography::stego_frame_lsb(std::vector <bool> secret_info)
     current_position = end_position;
     seek_zweite(current_position);
     ++сurrent_frame;
-    std::cout << current_position - 80000 << std::endl;
     return secret_info;
 }
 
@@ -136,26 +135,6 @@ std::vector<unsigned char> Steganography::stego_frame_change_full(std::vector<un
         char x = file_for_read_only.get();
         change_byte_certain(secret_info[0]);
         secret_info.erase(secret_info.begin());
-    }
-    current_position = end_position;
-    seek_zweite(current_position);
-    ++сurrent_frame;
-    return secret_info;
-}
-
-// для тетсирования и экспериментов
-std::vector<unsigned char> Steganography::stego_frame_change_smthng(std::vector<unsigned char> secret_info) {
-    int size_frame = frame_get_size();
-    current_position += 4;
-    seek_zweite(current_position); // перемещение на начало аудиоданных фрейма
-    int end_position = current_position + size_frame;
-    int size_info = secret_info.size();
-    if (сurrent_frame % 100 == 0) {
-        for (size_t i = 0; i < std::min(size_frame, size_info); ++i) {
-            char x = file_for_read_only.get();
-            change_byte_certain(secret_info[0]);
-            secret_info.erase(secret_info.begin());
-        }
     }
     current_position = end_position;
     seek_zweite(current_position);
@@ -186,6 +165,7 @@ void Steganography::steganography_change_full(std::vector<unsigned char> informa
     }
 }
 
+// представление информации в бинарном виде
 std::vector<unsigned char> Steganography::binarization_information(std::string information) {
     std::vector<unsigned char> vec;
     for (size_t i = 0; i < information.size(); ++i) {
@@ -194,19 +174,46 @@ std::vector<unsigned char> Steganography::binarization_information(std::string i
     return vec;
 }
 
+// получение размера tf из id3v2 тега
+int Steganography::id3v2_get_size_tf()
+{
+    int start_pos = current_position;
+    seek_zweite(current_position + 4);
+    int size_tf = 10;
+    for (size_t i = 0; i < 4; ++i) {
+        size_tf += file_for_read_only.get();
+        seek_zweite(current_position + 1);
+    }
+    seek_zweite(start_pos + size_tf);
+    std::cout << current_position << std::endl;
+    return size_tf;
+}
+
+// получение размера оссновной информации id3v2
+int Steganography::id3v2_get_size_base_info() {
+    return 0;
+}
 
 
-
-
-
-
-
-
-
-
-
-
-
+// для тетсирования и экспериментов
+std::vector<unsigned char> Steganography::stego_frame_change_smthng(std::vector<unsigned char> secret_info) {
+    int size_frame = frame_get_size();
+    current_position += 4;
+    seek_zweite(current_position); // перемещение на начало аудиоданных фрейма
+    int end_position = current_position + size_frame;
+    int size_info = secret_info.size();
+    if (сurrent_frame % 100 == 0) {
+        for (size_t i = 0; i < std::min(size_frame, size_info); ++i) {
+            char x = file_for_read_only.get();
+            change_byte_certain(secret_info[0]);
+            secret_info.erase(secret_info.begin());
+        }
+    }
+    current_position = end_position;
+    seek_zweite(current_position);
+    ++сurrent_frame;
+    return secret_info;
+}
 
 
 // график фрейма
@@ -234,13 +241,13 @@ void Steganography::frame_graphic() {
 void Steganography::test_change() {
     file_for_read_only.seekg(current_position + 2);
     int third_byte = file_for_read_only.get();
-    int size_frame = 1040 + third_byte % 4 - third_byte % 2;
+    int size_frame = frame_get_size();
     current_position += 4;
     seek_zweite(current_position);
     if (сurrent_frame % 1 == 0) {
         for (size_t i = 0; i < size_frame; ++i) {
             if (i < 1020) {
-                change_byte_certain(85);
+                change_byte_certain(third_byte - pow(third_byte % 2, 2));
             }
             else {
                 ++current_position;
