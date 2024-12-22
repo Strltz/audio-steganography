@@ -7,7 +7,7 @@ Steganography::Steganography(std::string file_name) {
     // исходный файл
     std::ifstream input_file(file_name, std::ios::binary); 
     // помечаем копию припиской " - copy"
-    file_name.insert(file_name.length() - 4, " - copy");
+    file_name.insert(file_name.length() - 4, "-copy");
     std::ofstream new_file(file_name, std::ios::binary);
     this->file_name = file_name;
     if (input_file && new_file) {
