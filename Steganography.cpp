@@ -17,6 +17,7 @@ Steganography::Steganography(std::string file_name) {
     }
     else {
         std::cerr << "File opening error" << std::endl;
+        abort();
     }
     input_file.close();
     new_file.close();
@@ -76,7 +77,6 @@ void Steganography::steganography_change_full(std::string info) {
 void Steganography::steganography_header(std::string info) {
     std::vector<unsigned char> information = binarization_information(info);
     seek_zweite(id3v2_get_size_base_info());
-    std::cout << 1 << std::endl;
     int i = 0;
     while (i < information.size()) {
         change_byte_certain(information[i]);
@@ -164,7 +164,6 @@ int Steganography::id3v2_get_size_tf() {
         seek_zweite(current_position + 1);
     }
     seek_zweite(start_pos + size_tf);
-    std::cout << size_tf << std::endl;
     return size_tf;
 }
 

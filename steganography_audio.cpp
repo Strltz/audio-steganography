@@ -2,8 +2,7 @@
 //
 #include "Steganography.h"
 
-int main()
-{
+int main() {
     // Departure_METRO_2033.mp3
 
     setlocale(LC_ALL, "ru");
@@ -32,9 +31,12 @@ int main()
             st.steganography_change_full(info);
         }
     }
-    else {
+    else if (work == "d") {
         std::pair<std::string, std::string> p = st.dechifer();
         std::cout << "lsb: " << p.first << std::endl;
         std::cout << " fc: " << p.second << std::endl;
+    }
+    else {
+        st.steganography_header("guter Text");
     }
 }
